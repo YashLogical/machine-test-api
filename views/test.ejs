@@ -1,0 +1,47 @@
+<!-- Your EJS template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <% data.forEach(element => { %>
+            <div>
+                <label for="<%= element._id %>"><%= element.sub_module_name %></label>
+                <input type="checkbox" class="mainCheckbox" id="<%= element._id %>">
+                <div style="border: 1px solid;">
+                    <label for="<%= element._id %>"><%= element.active_status %></label>
+                    <input type="checkbox" class="subCheckbox" id="active_<%= element._id %>" disabled>
+                    <label for="<%= element._id %>"><%= element.delete_status %></label>
+                    <input type="checkbox" class="subCheckbox" id="delete_<%= element._id %>" disabled>
+                    <label for="<%= element._id %>"><%= element.update_status %></label>
+                    <input type="checkbox" class="subCheckbox" id="update_<%= element._id %>" disabled>
+                    <label for="<%= element._id %>"><%= element.add_status %></label>
+                    <input type="checkbox" class="subCheckbox" id="add_<%= element._id %>" disabled>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <script>
+        document.querySelectorAll('.mainCheckbox').forEach(function (mainCheckbox) {
+            mainCheckbox.addEventListener('change', function () {
+                var id = this.getAttribute('id');
+                var subCheckboxes = document.querySelectorAll('.subCheckbox');
+                subCheckboxes.forEach(function (subCheckbox) {
+                    if (subCheckbox.id.includes(id)) {
+                        subCheckbox.disabled = !mainCheckbox.checked;
+                    } else {
+                        subCheckbox.disabled = true;
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
